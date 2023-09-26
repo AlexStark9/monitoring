@@ -62,7 +62,7 @@ def arg_parse():
 
     parser.add_argument('-v', '--version',
                         action='version',
-                        version='Версия 1.0'
+                        version='Версия 1.1'
                         )
 
     return parser.parse_args()

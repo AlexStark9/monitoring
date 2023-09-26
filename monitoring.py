@@ -4,7 +4,7 @@ from params import *
 from graphs import *
 from args import arg_parse
 from checking_device import device_selection
-from time_checkig import monitoring_time
+from helpers import *
 
 
 def main():
@@ -17,8 +17,9 @@ def main():
         print(f'Запущен мониторинг всех парметров. Время выполнения теста {time_sec} секунд.')
         manager = multiprocessing.Manager()
         result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=all_params, args=(tr_id, result,))
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.all_params)
 
         target1.start()
         target2.start()
@@ -27,13 +28,15 @@ def main():
         results = result
         target2.join()
 
-        graph_all_params(results)
+        pl = Plotting(results)
+        pl.graph_all_params()
     elif args.freq:
         print(f'Запущен мониторинг частоты CPU. Время выполнения теста {time_sec} секунд.')
         manager = multiprocessing.Manager()
         result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=freq, args=(tr_id, result,))
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.freq)
 
         target1.start()
         target2.start()
@@ -42,13 +45,15 @@ def main():
         results = result
         target2.join()
 
-        graph_freq(results)
+        pl = Plotting(results)
+        pl.graph_freq()
     elif args.idle:
         print(f'Запущен мониторинг idle. Время выполнения теста {time_sec} секунд.')
         manager = multiprocessing.Manager()
         result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=idle, args=(tr_id, result,))
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.idle)
 
         target1.start()
         target2.start()
@@ -57,13 +62,15 @@ def main():
         results = result
         target2.join()
 
-        graph_idle(results)
+        pl = Plotting(results)
+        pl.graph_idle()
     elif args.memory:
         print(f'Запущен мониторинг свободной RAM. Время выполнения теста {time_sec} секунд.')
         manager = multiprocessing.Manager()
         result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=memory, args=(tr_id, result,))
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.memory)
 
         target1.start()
         target2.start()
@@ -71,29 +78,16 @@ def main():
         target1.join()
         results = result
         target2.join()
-        print(results)
-        graph_memory(results)
+
+        pl = Plotting(results)
+        pl.graph_memory()
     elif args.temp:
         print(f'Запущен мониторинг тумпературы. Время выполнения теста {time_sec} секунд.')
         manager = multiprocessing.Manager()
         result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=temp, args=(tr_id, result,))
-
-        target1.start()
-        target2.start()
-
-        target1.join()
-        results = result
-        target2.join()
-
-        graph_temp(results)
-    elif args.uptime:
-        print(f'Запущен мониторинг load averages. Время выполнения теста {time_sec} секунд.')
-        manager = multiprocessing.Manager()
-        result = manager.list()
-        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec,))
-        target2 = multiprocessing.Process(target=uptime, args=(tr_id, result,))
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.temp)
 
         target1.start()
         target2.start()
@@ -102,7 +96,25 @@ def main():
         results = result
         target2.join()
         print(results)
-        graph_uptime(results)
+        pl = Plotting(results)
+        pl.graph_temp()
+    elif args.uptime:
+        print(f'Запущен мониторинг load averages. Время выполнения теста {time_sec} секунд.')
+        manager = multiprocessing.Manager()
+        result = manager.list()
+        pr = Parser(tr_id=tr_id, result=result)
+        target1 = multiprocessing.Process(target=monitoring_time, args=(time_sec, ))
+        target2 = multiprocessing.Process(target=pr.uptime)
+
+        target1.start()
+        target2.start()
+
+        target1.join()
+        results = result
+        target2.join()
+        print(results)
+        pl = Plotting(results)
+        pl.graph_uptime()
     else:
         print('Выберете параметр, для мониторинга! "-h" или "--help" поможет с выбором параметра.')
         quit()

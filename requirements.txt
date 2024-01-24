@@ -3,7 +3,6 @@ construct==2.10.68
 contourpy==1.1.0
 cycler==0.11.0
 defusedxml==0.7.1
-fonttools==4.42.1
 idna==3.4
 importlib-resources==6.0.1
 jira==3.5.1

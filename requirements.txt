@@ -1,8 +1,6 @@
-certifi==2022.12.7
 charset-normalizer==3.1.0
 construct==2.10.68
 contourpy==1.1.0
-crypto==1.4.1
 cycler==0.11.0
 defusedxml==0.7.1
 fonttools==4.42.1
@@ -11,7 +9,6 @@ importlib-resources==6.0.1
 jira==3.5.1
 kiwisolver==1.4.5
 matplotlib==3.7.3
-Naked==0.1.32
 numpy==1.25.2
 oauthlib==3.2.2
 packaging==23.1

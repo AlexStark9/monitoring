@@ -5,12 +5,12 @@
 ### Ответственные лица:
 
 * Starostin Aleksandr:
-  * MM: [Alex Stark](https://mm.sberdevices.ru/sberdevices/messages/@alexstark)
+  * Telegram: [Alex Stark](https://t.me/Alex_Stark1)
 
   
 
 ### Тестируемый поверхности:
-**SberBox / SberBox Top / SberBox Time / SberPortal**
+**Android devices на платформе Amlogic S905Y2, Android 11**
 
 
 
